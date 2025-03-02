@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  postgres:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=postgres
+    ports:
+      - "${POSTGRES_HOST_PORT}:5432" # Dynamic host port for PostgreSQL
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Persist PostgreSQL data
+
+  mongodb:
+    image: "mongo:latest"
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
+    ports:
+      - "${MONGO_HOST_PORT}:27017" # Dynamic host port for MongoDB
+    volumes:
+      - mongo-data:/data/db # Persist MongoDB data
+
+volumes:
+  mongo-data: # Volume for MongoDB data persistence
+  postgres-data: # Volume for PostgreSQL data persistence
